@@ -24,9 +24,9 @@ public class Recommendation {
     private String activityId;
     private String userId;
     private String activityType;
-    private String recommendation;
-    private List<String> improvements;
-    private List<String> suggestion;
+    private Analysis analysis;
+    private List<Improvements> improvements;
+    private List<Suggestion> suggestion;
     private List<String> safety;
     @CreatedDate
     private LocalDateTime createdAt;

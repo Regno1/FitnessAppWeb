@@ -1,0 +1,131 @@
+# ===================================
+# Spring Boot Microservices .gitignore
+# Project: FitnessAppWeb
+# ===================================
+
+# ───────────────────────────────────
+# 🔐 SENSITIVE / SECRET FILES
+# ───────────────────────────────────
+# Never commit API keys or secrets!
+**/application-local.yml
+**/application-local.yaml
+**/application-secret.yml
+**/application-secret.yaml
+*.env
+.env
+.env.*
+
+# ───────────────────────────────────
+# 🔐 SERVICE CONFIG FILES (contain passwords/keys)
+# ───────────────────────────────────
+# aiservice - contains Gemini API key
+aiservice/src/main/resources/application.yaml
+aiservice/src/main/resources/application.yml
+
+# configServer config files - contain DB passwords, API keys
+configServer/src/main/resources/config/ai-service.yaml
+configServer/src/main/resources/config/user-service.yaml
+configServer/src/main/resources/config/activity-service.yml
+
+# userservice - contains DB credentials
+userservice/src/main/resources/application.yaml
+userservice/src/main/resources/application.yml
+
+# activityservice
+activityservice/src/main/resources/application.yaml
+activityservice/src/main/resources/application.yml
+
+# ───────────────────────────────────
+# ☕ JAVA / MAVEN BUILD OUTPUT
+# ───────────────────────────────────
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.properties
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+logs/
+
+# Package files
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+# ───────────────────────────────────
+# 💡 INTELLIJ IDEA
+# ───────────────────────────────────
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Keep run configurations (optional: comment out if you want to share them)
+# .idea/runConfigurations/
+
+# ───────────────────────────────────
+# 🖥️ OS GENERATED FILES
+# ───────────────────────────────────
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+
+# ───────────────────────────────────
+# 🐳 DOCKER (if used later)
+# ───────────────────────────────────
+docker-compose.override.yml
+.docker/
+
+# ───────────────────────────────────
+# 📦 NODE / FRONTEND (if added later)
+# ───────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+.next/
+
+# ───────────────────────────────────
+# 🧪 TEST / COVERAGE REPORTS
+# ───────────────────────────────────
+/test-results/
+/coverage/
+*.exec
+
+# ───────────────────────────────────
+# 🔧 MISC TOOLS
+# ───────────────────────────────────
+*.swp
+*.swo
+*.orig
+*.bak
+*.tmp
