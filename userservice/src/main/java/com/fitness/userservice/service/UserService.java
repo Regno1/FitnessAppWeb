@@ -18,16 +18,30 @@ public class UserService {
     private UserRepository userRepository;
     public @Nullable UserResponse register(@Valid RegisterRequest request) {
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("User Not Found");
+            User existingUser= userRepository.findByEmail(request.getEmail());
+            UserResponse userResponse= new UserResponse();
+            userResponse.setId(existingUser.getId());
+            userResponse.setKeycloakId(existingUser.getKeycloakId());
+            userResponse.setEmail(existingUser.getEmail());
+            userResponse.setPassword(existingUser.getPassword());
+            userResponse.setFirstName(existingUser.getFirstName());
+            userResponse.setLastname(existingUser.getLastname());
+            userResponse.setCreatedAt(existingUser.getCreatedAt());
+            userResponse.setUpdatedAt(existingUser.getUpdatedAt());
+            return userResponse;  // was missing — caused fall-through to duplicate save
         }
 
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
+        user.setKeycloakId(request.getKeycloakId());
         user.setFirstName(request.getFirstName());
         user.setLastname(request.getLastName());
         User savedUser= userRepository.save(user);
+
+
         UserResponse userResponse= new UserResponse();
+        userResponse.setKeycloakId(savedUser.getKeycloakId());
         userResponse.setId(savedUser.getId());
         userResponse.setEmail(savedUser.getEmail());
         userResponse.setPassword(savedUser.getPassword());
@@ -55,6 +69,6 @@ public class UserService {
 
     public @Nullable Boolean existsByUserId(String userId) {
     log.info("Calling User Validation Api for userID:{}",userId);
-        return userRepository.existsById(userId);
+        return userRepository.existsByKeycloakId(userId);
     }
 }
