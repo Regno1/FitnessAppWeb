@@ -17,7 +17,7 @@ public class ActivityMsgListner {
     @RabbitListener(queues = "activity.queue")
     public void processActivity(Activity activity){
     log.info("Recieved Activity for processing: {}",activity.getId());
-    log.info("Generated Recommendation: {}",activityAiService.generateRecomendation(activity));
+    log.info("Generated Recommendation: {}",activityAiService.generateRecommendation(activity));
     }
 
 }

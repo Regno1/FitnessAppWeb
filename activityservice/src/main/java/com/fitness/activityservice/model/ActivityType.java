@@ -7,9 +7,15 @@ public enum ActivityType {
     SWIMMING,
     WEIGHT_TRAINING,
     YOGA,
+    HIIT,
+    PILATES,
+    HIKING,
+    DANCING,
+    SPORTS,
+    // Legacy values kept for backward compatibility
     HIKE,
     CARDIO,
-    STREACHING,
+    STRETCHING,
+    STREACHING,  // kept to avoid breaking existing MongoDB data
     OTHER
-
 }

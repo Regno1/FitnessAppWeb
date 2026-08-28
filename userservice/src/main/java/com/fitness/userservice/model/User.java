@@ -9,32 +9,38 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Data
-public class User{
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-
     private String id;
 
-    @Column(unique = true,nullable =false)
+    @Column(unique = true, nullable = false)
     @Email
     private String email;
-
-    @Column(unique = true)
-    private String keycloakId;
 
     @Column(nullable = false)
     private String password;
 
     private String firstName;
 
-    private String lastname;
+    private String lastName;
+
     @Enumerated(EnumType.STRING)
-    private UserRole role= UserRole.USER;
+    private UserRole role = UserRole.USER;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
+
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @PrePersist
+    void applyDefaults() {
+        if (role == null) {
+            role = UserRole.USER;
+        }
+    }
 }

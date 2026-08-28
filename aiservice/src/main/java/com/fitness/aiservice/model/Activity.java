@@ -19,9 +19,11 @@ public class Activity {
     private Integer caloriesBurned;
     private LocalDateTime startTime;
 
-    private Map<String,Object> additionalMatrics;
+    private Map<String,Object> additionalMetrics;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+
 }

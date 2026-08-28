@@ -40,7 +40,7 @@ public class ActivityService {
                 .duration(request.getDuration())
                 .caloriesBurned(request.getCaloriesBurned())
                 .startTime(request.getStartTime())
-                .additionalMatrics(request.getAdditionalMetrics())
+                .additionalMetrics(request.getAdditionalMetrics())
                 .build();
         Activity savedActivity = activityRepository.save(activity);
         //rabitmq
@@ -61,7 +61,7 @@ public class ActivityService {
         response.setDuration(activity.getDuration());
         response.setCaloriesBurned(activity.getCaloriesBurned());
         response.setStartTime(activity.getStartTime());
-        response.setAdditionalMatrics(activity.getAdditionalMatrics());
+        response.setAdditionalMetrics(activity.getAdditionalMetrics());
         response.setCreatedAt(activity.getCreatedAt());
     response.setUpdatedAt(activity.getUpdatedAt());
 return response;

@@ -30,7 +30,6 @@ public class GeminiService {
     }
 
     public String getAnswer(String question) {
-
         Map<String, Object> requestBody = Map.of(
                 "contents", List.of(
                         Map.of(
@@ -42,22 +41,23 @@ public class GeminiService {
         );
 
         try {
+            String apiKey = geminiApiKey.trim();
             String rawResponse = webClient.post()
-                    .uri(geminiApiUrl)
+                    .uri(geminiApiUrl + "?key=" + apiKey)
                     .header("Content-Type", "application/json")
-                    .header("X-goog-api-key", geminiApiKey)
                     .bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
 
+            log.debug("Raw Gemini response: {}", rawResponse);
             return extractTextFromResponse(rawResponse);
 
         } catch (WebClientResponseException e) {
             log.error("Gemini API error - Status: {}, Body: {}", e.getStatusCode(), e.getResponseBodyAsString());
             throw new RuntimeException("Gemini API call failed: " + e.getStatusCode(), e);
         } catch (Exception e) {
-            log.error("Unexpected error calling Gemini API: {}", e.getMessage());
+            log.error("Unexpected error calling Gemini API: {}", e.getMessage(), e);
             throw new RuntimeException("Gemini API call failed", e);
         }
     }
@@ -77,15 +77,22 @@ public class GeminiService {
                     .get(0)
                     .path("text");
 
-            if (textNode.isMissingNode() || textNode.isNull()) {
+            if (textNode == null || textNode.isMissingNode() || textNode.isNull()) {
                 log.warn("Could not extract text from Gemini response: {}", rawResponse);
                 return rawResponse;
             }
 
-            return textNode.asText();
+            String text = textNode.asText().trim();
+
+            // Strip markdown code fences (```json ... ```) that Gemini sometimes adds
+            if (text.startsWith("```")) {
+                text = text.replaceAll("^```[a-zA-Z]*\\n?", "").replaceAll("\\n?```$", "").trim();
+            }
+
+            return text;
 
         } catch (Exception e) {
-            log.warn("Failed to parse Gemini response, returning raw: {}", e.getMessage());
+            log.warn("Failed to parse Gemini response wrapper, returning raw: {}", e.getMessage());
             return rawResponse;
         }
     }

@@ -26,6 +26,7 @@ public class Recommendation {
     private String activityType;
     private Analysis analysis;
     private List<Improvements> improvements;
+    @com.fasterxml.jackson.annotation.JsonProperty("suggestions")
     private List<Suggestion> suggestion;
     private List<String> safety;
     @CreatedDate
